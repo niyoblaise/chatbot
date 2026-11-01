@@ -26,3 +26,17 @@ while True:
 
 
     convo_history.append({"role":"user","content":user_input})
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=convo_history,
+            temperature=0.7
+        )
+
+        reply = response.choices[0].message.content
+        print(f"\nAi: {reply}")
+
+        convo_history.append({"role":"assistant","content":reply})
+    except Exception as e:
+        print(f"Error: {e}")
