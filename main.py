@@ -30,7 +30,7 @@ while True:
         break
 
     try:
-        # chat.send_message automatically manages and appends to conversation history
+
         response = chat.send_message(user_input)
         print(f"\nAI: {response.text}")
 
