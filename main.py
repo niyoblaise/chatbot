@@ -24,3 +24,5 @@ while True:
         print("Chatbot: Goodbye!")
         break
 
+
+    convo_history.append({"role":"user","content":user_input})
