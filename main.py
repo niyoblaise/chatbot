@@ -13,3 +13,14 @@ convo_history = [
 ]
 
 print("AI Chatbot initialized (type 'quit' to exit)")
+
+while True:
+    user_input=input("\nyou: ").strip()
+
+    if not user_input:
+        continue
+
+    if user_input.lower() in ["quit","exit","q"]:
+        print("Chatbot: Goodbye!")
+        break
+
