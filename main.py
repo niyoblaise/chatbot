@@ -11,3 +11,5 @@ convo_history = [
         "content":"You are a software engineer assistant"
     }
 ]
+
+print("AI Chatbot initialized (type 'quit' to exit)")
