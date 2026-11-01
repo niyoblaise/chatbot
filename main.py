@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from google import genai
 
 load_dotenv()
-client = genai.client(api_key=os.getenv("OPEN_API_KEY"))
+client = genai.client(api_key=os.getenv("GEMINI_API_KEY"))
 
 convo_history = [
     {
