@@ -1,23 +1,30 @@
+
 import os
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
+from groq import Groq
 
 load_dotenv()
 
+api_key = os.getenv("GROQ_API_KEY")
+model = os.getenv("GROQ_MODEL")
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+if not api_key:
+    raise ValueError("GROQ_API_KEY is missing from .env")
 
+if not model:
+    raise ValueError("GROQ_MODEL is missing from .env")
 
-chat = client.chats.create(
-    model="gemini-3.8-flash",
-    config=types.GenerateContentConfig(
-        system_instruction="You are a software engineer assistant",
-        temperature=0.7,
-    )
-)
+# Initialize Groq client
+client = Groq(api_key=api_key)
 
-print("AI Chatbot initialized (type 'quit' to exit)")
+messages = [
+    {
+        "role": "system",
+        "content": "You are a software engineer assistant"
+    }
+]
+
+print(f"AI Chatbot initialized using {model} (type 'quit' to exit)")
 
 while True:
     user_input = input("\nYou: ").strip()
@@ -29,10 +36,27 @@ while True:
         print("Chatbot: Goodbye!")
         break
 
-    try:
+    messages.append({
+        "role": "user",
+        "content": user_input
+    })
 
-        response = chat.send_message(user_input)
-        print(f"\nAI: {response.text}")
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0.7
+        )
+
+        ai_response = response.choices[0].message.content
+
+        print(f"\nAI: {ai_response}")
+
+        messages.append({
+            "role": "assistant",
+            "content": ai_response
+        })
 
     except Exception as e:
         print(f"Error: {e}")
+        messages.pop()
