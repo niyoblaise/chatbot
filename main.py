@@ -14,7 +14,6 @@ if not api_key:
 if not model:
     raise ValueError("GROQ_MODEL is missing from .env")
 
-# Initialize Groq client
 client = Groq(api_key=api_key)
 
 messages = [
